@@ -96,7 +96,6 @@ class SinhVien : public Nguoi{
         }
         double getDiem(){return diem;}
         int getMaLop(){return maLop;}
-
 };
 
 void nhapSinhVien(int m, vector<SinhVien>& sv){
