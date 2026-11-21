@@ -43,7 +43,8 @@ class NhanVien : public Nguoi{
         }
         int getNamSinh(){return namSinh;}
         double getHeSoLuong(){return heSoLuong;}
-        
+        double tinhLuong(){return heSoLuong * 1.5;}
+        string getHoTen(){return hoTen;}
 };
 
 class SinhVien : public Nguoi{
@@ -63,10 +64,14 @@ class SinhVien : public Nguoi{
             cout<<"Ma lop: "<<maLop<<endl;
             cout<<"Diem: "<<diem<<endl;
         }
+        double getDiem(){return diem;}
+
 };
 void nhapNhanVien(int n, vector<NhanVien>& nv){
     for(int i=0; i<n; i++){
+        cout<<"Nhap nhan vien thu "<<i+1<<" :"<<endl;
         nv[i].nhap();
+        cout<<endl;
     }
 }
 int nhanVienTuoiCaoNhat(int n, vector<NhanVien>& nv){
@@ -78,16 +83,56 @@ int nhanVienTuoiCaoNhat(int n, vector<NhanVien>& nv){
     }
     return maxTuoi;
 }
+void timNhanVien(int n, string ten, vector<NhanVien>& nv){
+    bool timThay = false;
+    for(int i=0; i<n; i++){
+        if(nv[i].getHoTen() == ten){
+            timThay = true;
+            nv[i].xuat();
+            cout<<"Luong: "<<nv[i].tinhLuong()<<endl;
+            break; 
+        }
+    }
+    if(timThay == false){
+        cout<<"Khong tim thay nhan vien co ten vua nhap!"<<endl;
+    }
+}
 
+void nhapSinhVien(int m, vector<SinhVien>& sv){
+    for(int i=0; i<m; i++){
+        cout<<"Nhap sinh vien thu "<<i+1<<" :"<<endl;
+        sv[i].nhap();
+        cout<<endl;
+    }
+}
+double diemThapNhat(int m, vector<SinhVien>& sv){
+    int min = sv[0].getDiem();
+    for(int i=1; i<m; i++){
+        if(sv[i].getDiem() < min){
+            min = sv[i].getDiem();
+        }
+    }
+    return min;
+}
 int main(){
+    //nhan vien
     int n;
-    cout<<"Nhap n nhan vien: "; cin>>n;
-    int m;
-    cout<<"Nhap m sinh vien: "; cin>>m;
+    cout<<"Nhap so nhan vien: "; cin>>n;
     vector<NhanVien> nv(n);
-    vector<SinhVien> sv(m);
-    cout<<"Nhap thong tin nhan vien: "<<endl;
+    cout<<endl<<"Nhap thong tin nhan vien: "<<endl;
     nhapNhanVien(n, nv);
     cout<<"Nhan vien co tuoi cao nhat sinh nam: "<<nhanVienTuoiCaoNhat(n, nv)<<endl;
-
+    string ten;
+    cout<<"Nhap ten nhan vien can tim: ";
+    getline(cin>>ws, ten);
+    timNhanVien(n, ten, nv);
+    //sinh vien
+    int m;
+    cout<<"Nhap so sinh vien: "; cin>>m;
+    vector<SinhVien> sv(m);
+    cout<<"Nhap thong tin sinh vien: "<<endl;
+    nhapSinhVien(m, sv);
+    cout<<"Sinh vien co diem thap nhat la: "<<diemThapNhat(m, sv)<<endl;
+    
+    return 0;
 }
