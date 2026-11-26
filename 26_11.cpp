@@ -45,7 +45,7 @@ class HocKy{
             cout<<"Nhap so mon hoc: "; cin>>soMonHoc;
             ds.clear();
             for(int i=0; i<soMonHoc; i++){
-                cout<<"Nhap mon hoc thu "<<i+1<<" :"<<endl;
+                cout<<"\nNhap mon hoc thu "<<i+1<<" :"<<endl;
                 MonHoc mh;
                 mh.nhap();
                 ds.push_back(mh);
@@ -72,17 +72,41 @@ class HocKy{
 void nhapDanhSachKyHoc(int n, vector<HocKy>& hk){
     for(int i=0; i<n; i++){
         cout<<"Hoc ky thu "<<i+1<<" :"<<endl;
-        HocKy h;
-        h.nhap();
-        hk.push_back(h);
+        hk[i].nhap();
+        cout<<endl;
     }
 }
 void tinChiTungHocKy(int n, vector<HocKy>& hk){
-    
+    for(int i=0; i<n; i++){
+        cout<<"Hoc ky: "<<hk[i].getMaKyHoc()<<endl;
+        cout<<"Tong so tin chi: "<<hk[i].tongTinChi()<<endl;
+    }
+}
+void hocKyNhieuTinChiNhat(int n, vector<HocKy>& hk){
+    if(n==0) return;
+    int maxTinChi=hk[0].tongTinChi();
+    for(int i=1; i<n; i++){
+        if(hk[i].tongTinChi()>maxTinChi){
+            maxTinChi = hk[i].tongTinChi();
+        }
+    }
+    cout<<"Hoc ky co nhieu tin chi nhat la: "<<endl;
+    for(int i=0; i<n; i++){
+        if(hk[i].tongTinChi() == maxTinChi){
+            cout<<"Ma hoc ky: "<<hk[i].getMaKyHoc()<<endl;
+            cout<<"Tong tin chi: "<<maxTinChi<<endl;
+        }
+    }
 }
 int main(){
     int n;
     cout<<"Nhap so hoc ky: "; cin>>n;
-    vector<HocKy> hk;
-
+    vector<HocKy> hk(n);
+    cout<<"Nhap danh sach hoc ky: "<<endl;
+    nhapDanhSachKyHoc(n, hk);
+    cout<<"Tong tin chi tung hoc ky: "<<endl;
+    tinChiTungHocKy(n, hk);
+    
+    hocKyNhieuTinChiNhat(n, hk);
+    return 0;
 }
